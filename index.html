@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COAC 2026 - Gran Teatro Falla | Cuadrante Preliminares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Mobile-first responsive design */
+        @media (max-width: 640px) {
+            .vote-button {
+                min-height: 56px;
+                font-size: 16px;
+            }
+            .card-title {
+                font-size: 1.125rem;
+                line-height: 1.4;
+            }
+            .carnival-font {
+                font-size: 3rem;
+            }
+            .countdown-digit {
+                font-size: 2.5rem;
+            }
+        }
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .vote-button {
+                min-height: 52px;
+            }
+            .carnival-font {
+                font-size: 4rem;
+            }
+        }
+        
+        /* Touch optimizations */
+        .touch-manipulation {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        /* Smooth scrolling for mobile */
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Better focus states for accessibility */
+        button:focus-visible, input:focus-visible {
+            outline: 2px solid #D4AF37;
+            outline-offset: 2px;
+        }
+        
+        /* Toast animations */
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.3s ease-out;
+        }
+    </style>
+    <style>
+        :root {
+            --falla-red: #8B0000;
+            --falla-gold: #D4AF37;
+            --carnival-blue: #1e3a8a;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #f8fafc;
+        }
+        .carnival-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .smooth-shadow {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--falla-gold); }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #D4AF37 0%, #fbbf24 100%);
+            color: #000;
+            transform: scale(1.05);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-enter {
+            animation: slideIn 0.4s ease-out forwards;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .pulse-gold {
+            animation: pulseGold 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGold {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); }
+        }
+
+        .youtube-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        
+        .youtube-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- News Ticker - Mejorado -->
+    <div class="bg-gradient-to-r from-[#8B0000] via-[#a00000] to-[#8B0000] text-white py-2.5 overflow-hidden border-b-2 border-[#D4AF37]">
+        <div class="flex animate-marquee gap-16 font-semibold text-xs tracking-wide">
+            <span class="flex items-center gap-2">🔥 Las entradas se agotan en tiempo récord</span>
+            <span class="flex items-center gap-2">🎭 Nivel histórico en preliminares 2026</span>
+            <span class="flex items-center gap-2">📍 Gran ambiente en Plaza Mina</span>
+            <span class="flex items-center gap-2">⭐ El jurado destaca la calidad excepcional</span>
+            <span class="flex items-center gap-2">📺 Transmisión completa en directo</span>
+        </div>
+    </div>
+
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: fit-content;
+            animation: marquee 35s linear infinite;
+        }
+    </style>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center backdrop-blur-xl p-4">
+        <div class="max-w-md w-full p-6 sm:p-10 glass-panel rounded-3xl text-center border-2 border-[#D4AF37]/30 smooth-shadow">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#D4AF37] to-[#fbbf24] rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 pulse-gold">
+                <i data-lucide="medal" class="w-8 h-8 sm:w-10 sm:h-10 text-black"></i>
+            </div>
+            <h2 class="carnival-font text-4xl sm:text-5xl text-[#D4AF37] mb-2 sm:mb-3">COAC 2026</h2>
+            <p class="text-slate-400 mb-6 sm:mb-8 text-xs sm:text-sm">Identifícate como Jurado Profesional</p>
+            <div class="relative mb-4 sm:mb-6">
+                <input type="text" id="user-nickname" placeholder="Tu nombre o apodo" 
+                       class="w-full bg-black/40 border-2 border-white/10 rounded-xl py-3 sm:py-4 px-4 sm:px-5 text-white focus:border-[#D4AF37] outline-none transition-all text-base touch-manipulation">
+                <i data-lucide="user" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+            </div>
+            <button onclick="startSession()" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#fbbf24] text-black font-bold py-3 sm:py-4 rounded-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 mb-4 touch-manipulation">
+                ENTRAR AL CUADRANTE <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+            <p class="text-[10px] text-white/30 italic">Sistema anti-fraude activo · Una cuenta por dispositivo</p>
+        </div>
+    </div>
+
+    <!-- Header Mejorado -->
+    <header class="relative pt-6 sm:pt-8 pb-8 sm:pb-12 px-4 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#8B0000]/20 to-transparent"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center gap-2 sm:gap-3 justify-center md:justify-start mb-2 sm:mb-3">
+                        <span class="bg-red-600 text-[10px] font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">OFICIAL</span>
+                        <span class="bg-white/10 text-[10px] font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/20">PRELIMINARES</span>
+                    </div>
+                    <h1 class="carnival-font text-5xl sm:text-6xl md:text-7xl text-[#D4AF37] mb-1 sm:mb-2">COAC 2026</h1>
+                    <p class="text-sm sm:text-base md:text-lg font-light tracking-wider text-white/80">Gran Teatro Falla · Cuadrante Profesional</p>
+                </div>
+                <div class="flex flex-col items-center md:items-end gap-3 w-full md:w-auto">
+                    <div class="flex items-center gap-3 glass-panel px-4 sm:px-5 py-2 sm:py-3 rounded-2xl w-full md:w-auto justify-between md:justify-start">
+                        <div class="flex flex-col items-start md:items-end">
+                            <span class="text-[10px] text-[#D4AF37] font-bold uppercase">Jurado</span>
+                            <span id="display-user" class="text-sm sm:text-base font-bold">Invitado</span>
+                        </div>
+                        <button onclick="logout()" class="p-2 hover:bg-red-900/40 rounded-lg transition-colors touch-manipulation" title="Cerrar sesión">
+                            <i data-lucide="log-out" class="w-4 h-4 text-white/60"></i>
+                        </button>
+                    </div>
+                    <div class="glass-panel p-4 sm:p-5 rounded-2xl flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+                        <div class="text-left md:text-right">
+                            <p class="text-[10px] uppercase text-white/50 font-bold">Veredictos</p>
+                            <p class="text-xl sm:text-2xl font-bold text-[#D4AF37]" id="stats-counter">0 / 115</p>
+                        </div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#D4AF37] to-[#fbbf24] rounded-xl flex items-center justify-center pulse-gold">
+                            <i data-lucide="award" class="w-5 h-5 sm:w-6 sm:h-6 text-black"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Countdown Mejorado -->
+            <div class="glass-panel rounded-2xl p-4 sm:p-6 border border-[#D4AF37]/20 smooth-shadow">
+                <div class="flex flex-col items-center">
+                    <span class="text-xs uppercase tracking-widest font-bold text-[#D4AF37] mb-3 sm:mb-4">Cuenta atrás para el estreno</span>
+                    <div id="countdown" class="flex gap-4 sm:gap-6 md:gap-10 justify-center">
+                        <div class="text-center">
+                            <span id="days" class="countdown-digit text-4xl sm:text-5xl md:text-6xl font-black block text-white">00</span>
+                            <span class="text-xs uppercase text-white/40 font-semibold">Días</span>
+                        </div>
+                        <span class="text-4xl sm:text-5xl text-white/20">:</span>
+                        <div class="text-center">
+                            <span id="hours" class="countdown-digit text-4xl sm:text-5xl md:text-6xl font-black block text-white">00</span>
+                            <span class="text-xs uppercase text-white/40 font-semibold">Horas</span>
+                        </div>
+                        <span class="text-4xl sm:text-5xl text-white/20">:</span>
+                        <div class="text-center">
+                            <span id="minutes" class="countdown-digit text-4xl sm:text-5xl md:text-6xl font-black block text-white">00</span>
+                            <span class="text-xs uppercase text-white/40 font-semibold">Mins</span>
+                        </div>
+                        <span class="text-4xl sm:text-5xl text-white/20">:</span>
+                        <div class="text-center">
+                            <span id="seconds" class="countdown-digit text-4xl sm:text-5xl md:text-6xl font-black block text-[#D4AF37]">00</span>
+                            <span class="text-xs uppercase text-white/40 font-semibold">Segs</span>
+                        </div>
+                    </div>
+                    <div id="live-indicator" class="hidden mt-4 bg-red-600 px-6 py-2 rounded-full text-xs font-bold animate-pulse flex items-center gap-2">
+                        <div class="w-2 h-2 bg-white rounded-full"></div> EN DIRECTO
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-8">
+        
+        <!-- YouTube Live Stream - Destacado -->
+        <section class="mb-8 sm:mb-12">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+                <div class="flex items-center gap-3">
+                    <div id="live-dot" class="w-2 h-2 bg-amber-500 rounded-full"></div>
+                    <h2 class="text-xl sm:text-2xl font-bold">Transmisión Oficial</h2>
+                    <span id="live-badge" class="bg-amber-600 text-xs font-bold px-2 sm:px-3 py-1 rounded-full">PRÓXIMAMENTE</span>
+                </div>
+                <a href="https://www.youtube.com/@ondacadiz" target="_blank" 
+                   class="flex items-center gap-2 text-xs sm:text-sm text-[#D4AF37] hover:text-[#fbbf24] transition-colors touch-manipulation">
+                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                    Ver Canal Onda Cádiz
+                </a>
+            </div>
+            <div class="glass-panel p-3 sm:p-4 rounded-2xl border border-red-600/20 smooth-shadow">
+                <!-- Player Container -->
+                <div id="youtube-player-container" class="youtube-container relative">
+                    <!-- Placeholder mientras no hay stream -->
+                    <div id="youtube-placeholder" class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center text-center p-6">
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-red-600/20 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                            <i data-lucide="tv" class="w-10 h-10 sm:w-12 sm:h-12 text-red-500"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Transmisión Próximamente</h3>
+                        <p class="text-sm sm:text-base text-white/60 mb-4 sm:mb-6 max-w-md">
+                            El stream en vivo estará disponible cuando comience la sesión oficial
+                        </p>
+                        <a href="https://www.youtube.com/@ondacadiz/streams" target="_blank"
+                           class="bg-red-600 hover:bg-red-500 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all flex items-center gap-2 touch-manipulation">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            Ver en Onda Cádiz
+                        </a>
+                        <p class="mt-4 text-xs text-white/40">Cuando el directo esté activo, se mostrará aquí automáticamente</p>
+                    </div>
+                    
+                    <!-- YouTube iframe (oculto por defecto) -->
+                    <iframe 
+                        id="youtube-iframe"
+                        class="hidden"
+                        src="" 
+                        allowfullscreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                    </iframe>
+                </div>
+                
+                <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs sm:text-sm">
+                    <span class="text-white/60">Onda Cádiz - Canal Oficial COAC</span>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <div id="status-dot" class="w-2 h-2 bg-amber-500 rounded-full"></div>
+                            <span id="status-text" class="text-white/80">Esperando stream</span>
+                        </div>
+                        <button onclick="toggleVideoMode()" class="text-[#D4AF37] hover:text-[#fbbf24] font-semibold flex items-center gap-1 touch-manipulation">
+                            <i data-lucide="settings" class="w-3 h-3"></i>
+                            <span id="mode-toggle-text">Modo LIVE</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filtros y Búsqueda Mejorados -->
+        <div class="mb-6 sm:mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                    <input type="text" id="search-groups" oninput="handleSearch(this.value)" 
+                           placeholder="Buscar agrupación..." 
+                           class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 sm:pl-12 pr-4 text-white focus:border-[#D4AF37] outline-none transition-all text-base touch-manipulation">
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <button onclick="filterByType('all')" class="filter-btn active whitespace-nowrap px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-white/10 font-semibold text-sm transition-all touch-manipulation">
+                        Todas
+                    </button>
+                    <button onclick="filterByType('Coro')" class="filter-btn whitespace-nowrap px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-400 font-semibold text-sm transition-all touch-manipulation">
+                        Coros
+                    </button>
+                    <button onclick="filterByType('Comparsa')" class="filter-btn whitespace-nowrap px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-semibold text-sm transition-all touch-manipulation">
+                        Comparsas
+                    </button>
+                    <button onclick="filterByType('Chirigota')" class="filter-btn whitespace-nowrap px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 font-semibold text-sm transition-all touch-manipulation">
+                        Chirigotas
+                    </button>
+                    <button onclick="filterByType('Cuarteto')" class="filter-btn whitespace-nowrap px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-400 font-semibold text-sm transition-all touch-manipulation">
+                        Cuartetos
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs Mejorados -->
+        <div class="mb-6 sm:mb-8 overflow-x-auto pb-4 flex gap-2 sm:gap-3 -mx-4 px-4 sm:mx-0 sm:px-0" id="function-tabs"></div>
+
+        <!-- Content Area -->
+        <div id="function-content" class="space-y-4 mb-12"></div>
+
+        <!-- Estadísticas Mejoradas -->
+        <section class="glass-panel rounded-2xl p-4 sm:p-6 md:p-8 border border-white/10 smooth-shadow">
+            <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                <i data-lucide="trending-up" class="text-[#D4AF37] w-5 h-5 sm:w-6 sm:h-6"></i>
+                <h2 class="text-xl sm:text-2xl font-bold">Estadísticas de Tu Clasificación</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6" id="summary-stats"></div>
+        </section>
+    </main>
+
+    <!-- Share & Settings Buttons -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+        <button onclick="openSettings()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold p-4 rounded-xl shadow-2xl hover:scale-105 transition-all border border-white/10" title="Configuración">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+        </button>
+        <button onclick="shareVotes()" class="bg-gradient-to-r from-[#D4AF37] to-[#fbbf24] text-black font-bold p-4 rounded-xl shadow-2xl hover:scale-105 transition-all pulse-gold" title="Compartir">
+            <i data-lucide="share-2" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center backdrop-blur-xl p-4">
+        <div class="max-w-lg w-full glass-panel rounded-2xl p-6 sm:p-8 border-2 border-white/10 smooth-shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <i data-lucide="settings" class="text-[#D4AF37]"></i>
+                    Configuración
+                </h2>
+                <button onclick="closeSettings()" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Notificaciones -->
+                <div class="glass-panel p-4 rounded-xl">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <i data-lucide="bell" class="w-4 h-4 text-[#D4AF37]"></i>
+                        Notificaciones
+                    </h3>
+                    <p class="text-sm text-white/60 mb-3">Recibe avisos 10 minutos antes de cada sesión</p>
+                    <button onclick="toggleNotifications()" id="notification-toggle" class="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 font-bold py-3 rounded-xl transition-all">
+                        Activar Notificaciones
+                    </button>
+                </div>
+
+                <!-- Info del dispositivo -->
+                <div class="glass-panel p-4 rounded-xl">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+                        Sistema Anti-fraude
+                    </h3>
+                    <div class="text-xs space-y-2 text-white/60">
+                        <p>ID del dispositivo: <span class="text-[#D4AF37] font-mono" id="device-id-display">-</span></p>
+                        <p>Cuentas en este dispositivo: <span class="text-[#D4AF37] font-bold" id="accounts-count">-</span></p>
+                        <p class="text-[10px] opacity-50 mt-2">Este sistema evita votos duplicados y mantiene la integridad del concurso.</p>
+                    </div>
+                </div>
+
+                <!-- Modo de video -->
+                <div class="glass-panel p-4 rounded-xl">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <i data-lucide="youtube" class="w-4 h-4 text-[#D4AF37]"></i>
+                        Configuración de Video
+                    </h3>
+                    <p class="text-xs text-white/60 mb-3">Cambia el modo de visualización del stream</p>
+                    <div class="space-y-2 text-xs">
+                        <button onclick="videoMode='placeholder'; initVideoPlayer(); closeSettings();" 
+                                class="w-full text-left px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+                            <span class="font-bold text-amber-400">📋 Placeholder</span>
+                            <p class="text-white/40 text-[10px] mt-0.5">Mostrar mensaje de espera</p>
+                        </button>
+                        <button onclick="videoMode='video'; initVideoPlayer(); closeSettings();" 
+                                class="w-full text-left px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+                            <span class="font-bold text-green-400">🎬 Video</span>
+                            <p class="text-white/40 text-[10px] mt-0.5">Video grabado específico</p>
+                        </button>
+                        <button onclick="videoMode='live'; initVideoPlayer(); closeSettings();" 
+                                class="w-full text-left px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+                            <span class="font-bold text-red-400">🔴 LIVE</span>
+                            <p class="text-white/40 text-[10px] mt-0.5">Stream en directo del canal</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="glass-panel p-4 rounded-xl">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4AF37]"></i>
+                        Tus Estadísticas
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-emerald-400" id="total-passed">0</p>
+                            <p class="text-xs text-white/40">Pasan</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-rose-400" id="total-rejected">0</p>
+                            <p class="text-xs text-white/40">No pasan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resetear cuenta -->
+                <button onclick="resetAccount()" class="w-full bg-red-900/20 hover:bg-red-900/40 border border-red-500/30 text-red-400 font-bold py-3 rounded-xl transition-all">
+                    <i data-lucide="trash-2" class="w-4 h-4 inline mr-2"></i>
+                    Borrar Todos los Votos
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // ⚙️ CONFIGURACIÓN RÁPIDA DE VIDEO
+        // ==========================================
+        
+        // OPCIÓN 1: Video específico (cuando ya hay una grabación)
+        // Ejemplo: https://www.youtube.com/watch?v=_xtk5CkqKRI
+        // Copia solo lo que viene después de "v=" 
+        const YOUTUBE_VIDEO_ID = "_xtk5CkqKRI";
+        
+        // OPCIÓN 2: Canal en directo (recomendado para eventos live)
+        // ID del canal de Onda Cádiz
+        const YOUTUBE_CHANNEL_ID = "UCpOz3CN6mDlxkE7-m5AS1aQ";
+        
+        // Modo por defecto: 'placeholder' | 'video' | 'live'
+        let videoMode = 'placeholder'; // Cambiar a 'live' cuando empiece el evento
+        
+        // ==========================================
+        // SISTEMA DE VIDEO INTELIGENTE
+        // ==========================================
+        
+        function initVideoPlayer() {
+            const iframe = document.getElementById('youtube-iframe');
+            const placeholder = document.getElementById('youtube-placeholder');
+            
+            if (videoMode === 'placeholder') {
+                // Mostrar placeholder
+                placeholder.classList.remove('hidden');
+                iframe.classList.add('hidden');
+                updateVideoStatus('Esperando stream', 'amber');
+            } else if (videoMode === 'video') {
+                // Modo video específico
+                iframe.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=0`;
+                placeholder.classList.add('hidden');
+                iframe.classList.remove('hidden');
+                updateVideoStatus('Video cargado', 'green');
+                
+                // Detectar error de carga
+                iframe.onerror = () => {
+                    showVideoError();
+                };
+            } else if (videoMode === 'live') {
+                // Modo live stream del canal
+                iframe.src = `https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1`;
+                placeholder.classList.add('hidden');
+                iframe.classList.remove('hidden');
+                updateVideoStatus('Transmisión en vivo', 'red', true);
+            }
+            
+            localStorage.setItem('coac2026_video_mode', videoMode);
+            updateModeToggleText();
+        }
+        
+        function toggleVideoMode() {
+            const modes = ['placeholder', 'video', 'live'];
+            const currentIndex = modes.indexOf(videoMode);
+            videoMode = modes[(currentIndex + 1) % modes.length];
+            
+            initVideoPlayer();
+            
+            // Feedback al usuario
+            const modeNames = {
+                'placeholder': 'Modo Placeholder activado',
+                'video': 'Modo Video activado',
+                'live': 'Modo LIVE activado'
+            };
+            
+            // Show toast notification
+            showToast(modeNames[videoMode]);
+        }
+        
+        function updateVideoStatus(text, color, pulse = false) {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const liveBadge = document.getElementById('live-badge');
+            const liveDot = document.getElementById('live-dot');
+            
+            statusText.textContent = text;
+            
+            // Colors
+            const colors = {
+                'amber': 'bg-amber-500',
+                'green': 'bg-green-500',
+                'red': 'bg-red-600'
+            };
+            
+            statusDot.className = `w-2 h-2 ${colors[color]} rounded-full ${pulse ? 'animate-pulse' : ''}`;
+            liveDot.className = `w-2 h-2 ${colors[color]} rounded-full ${pulse ? 'animate-pulse' : ''}`;
+            
+            // Update badge
+            if (color === 'red') {
+                liveBadge.textContent = 'LIVE';
+                liveBadge.className = 'bg-red-600 text-xs font-bold px-2 sm:px-3 py-1 rounded-full animate-pulse';
+            } else if (color === 'green') {
+                liveBadge.textContent = 'DISPONIBLE';
+                liveBadge.className = 'bg-green-600 text-xs font-bold px-2 sm:px-3 py-1 rounded-full';
+            } else {
+                liveBadge.textContent = 'PRÓXIMAMENTE';
+                liveBadge.className = 'bg-amber-600 text-xs font-bold px-2 sm:px-3 py-1 rounded-full';
+            }
+        }
+        
+        function updateModeToggleText() {
+            const toggleText = document.getElementById('mode-toggle-text');
+            const modes = {
+                'placeholder': 'Activar Video',
+                'video': 'Modo LIVE',
+                'live': 'Desactivar'
+            };
+            toggleText.textContent = modes[videoMode];
+        }
+        
+        function showVideoError() {
+            const placeholder = document.getElementById('youtube-placeholder');
+            const iframe = document.getElementById('youtube-iframe');
+            
+            placeholder.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center p-6">
+                    <div class="w-20 h-20 bg-red-600/20 rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-red-400">Video No Disponible</h3>
+                    <p class="text-white/60 mb-6 max-w-md text-sm">
+                        Este video no permite ser incrustado en otras webs.<br>
+                        <span class="text-xs opacity-60">(Error 153: El propietario deshabilitó la incrustación)</span>
+                    </p>
+                    <a href="https://www.youtube.com/@ondacadiz/streams" target="_blank"
+                       class="bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-xl transition-all flex items-center gap-2">
+                        <i data-lucide="play-circle" class="w-5 h-5"></i>
+                        Ver en YouTube
+                    </a>
+                    <button onclick="videoMode='live'; initVideoPlayer();" class="mt-4 text-[#D4AF37] hover:text-[#fbbf24] text-sm font-semibold">
+                        Intentar con stream en vivo
+                    </button>
+                </div>
+            `;
+            
+            placeholder.classList.remove('hidden');
+            iframe.classList.add('hidden');
+            updateVideoStatus('Error de carga', 'red');
+            lucide.createIcons();
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-24 right-6 bg-gradient-to-r from-[#D4AF37] to-[#fbbf24] text-black font-bold px-6 py-3 rounded-xl shadow-2xl z-50 animate-slide-up';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+        
+        // ==========================================
+        // SISTEMA ANTI-FRAUDE
+        // ==========================================
+        function getBrowserFingerprint() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillText('fingerprint', 2, 2);
+            
+            const fingerprint = {
+                canvas: canvas.toDataURL(),
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                screenResolution: `${screen.width}x${screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                cores: navigator.hardwareConcurrency || 'unknown'
+            };
+            
+            const fingerprintString = JSON.stringify(fingerprint);
+            let hash = 0;
+            for (let i = 0; i < fingerprintString.length; i++) {
+                const char = fingerprintString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'fp_' + Math.abs(hash).toString(36);
+        }
+
+        function checkDeviceIntegrity() {
+            const fingerprint = getBrowserFingerprint();
+            const storedFingerprint = localStorage.getItem('coac2026_device_id');
+            
+            if (!storedFingerprint) {
+                localStorage.setItem('coac2026_device_id', fingerprint);
+                return { isNew: true, fingerprint };
+            }
+            
+            if (storedFingerprint !== fingerprint) {
+                console.warn('⚠️ Dispositivo diferente detectado');
+            }
+            
+            return { isNew: false, fingerprint, stored: storedFingerprint };
+        }
+
+        function getUserVoteCount(username) {
+            const votes = JSON.parse(localStorage.getItem('coac2026_votes')) || {};
+            return Object.keys(votes).filter(k => k.startsWith(`${username}_`)).length;
+        }
+
+        function checkMultipleAccounts() {
+            const allUsers = JSON.parse(localStorage.getItem('coac2026_all_users')) || [];
+            const deviceId = localStorage.getItem('coac2026_device_id');
+            
+            const usersOnDevice = allUsers.filter(u => u.deviceId === deviceId);
+            
+            if (usersOnDevice.length > 1) {
+                return {
+                    suspicious: true,
+                    count: usersOnDevice.length,
+                    users: usersOnDevice.map(u => u.username)
+                };
+            }
+            
+            return { suspicious: false };
+        }
+
+        function registerUser(username) {
+            const allUsers = JSON.parse(localStorage.getItem('coac2026_all_users')) || [];
+            const deviceId = localStorage.getItem('coac2026_device_id');
+            
+            const existingUser = allUsers.find(u => u.username === username);
+            if (!existingUser) {
+                allUsers.push({
+                    username,
+                    deviceId,
+                    registeredAt: new Date().toISOString()
+                });
+                localStorage.setItem('coac2026_all_users', JSON.stringify(allUsers));
+            }
+        }
+
+        // ==========================================
+        // SISTEMA DE NOTIFICACIONES
+        // ==========================================
+        let notificationPermission = 'default';
+
+        async function requestNotificationPermission() {
+            if ('Notification' in window) {
+                notificationPermission = await Notification.requestPermission();
+                if (notificationPermission === 'granted') {
+                    showNotification('¡Notificaciones activadas!', 'Te avisaremos 10 minutos antes de cada sesión', '🔔');
+                    localStorage.setItem('coac2026_notifications', 'enabled');
+                }
+            }
+        }
+
+        function showNotification(title, body, icon) {
+            if (notificationPermission === 'granted') {
+                new Notification(title, {
+                    body: body,
+                    icon: icon || '🎭',
+                    badge: '🎭',
+                    vibrate: [200, 100, 200],
+                    tag: 'coac-session'
+                });
+            }
+        }
+
+        function scheduleSessionNotifications() {
+            coacData.forEach(session => {
+                const [day, monthDay, monthName] = session.date.split(' ');
+                const [hours, minutes] = session.time.replace('h', '').split(':');
+                
+                const sessionDate = new Date(2026, 0, parseInt(monthDay), parseInt(hours), parseInt(minutes));
+                const notificationTime = new Date(sessionDate.getTime() - 10 * 60 * 1000); // 10 min antes
+                
+                const now = new Date();
+                const timeUntilNotification = notificationTime.getTime() - now.getTime();
+                
+                if (timeUntilNotification > 0 && timeUntilNotification < 24 * 60 * 60 * 1000) {
+                    setTimeout(() => {
+                        showNotification(
+                            `¡Sesión en 10 minutos!`,
+                            `${session.date} - ${session.groups.length} agrupaciones`,
+                            '⏰'
+                        );
+                    }, timeUntilNotification);
+                }
+            });
+        }
+
+        // ==========================================
+        // DATOS Y VARIABLES GLOBALES
+        // ==========================================
+        const coacData = [
+            { id: 1, date: "Domingo 11 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Al lío" }, { type: "Comparsa", name: "La palabra de Cádiz" }, { type: "Chirigota", name: "Los hombres de Paco" }, { type: "Comparsa", name: "El desguace" }, { type: "Chirigota", name: "Los semicuraos" }, { type: "Comparsa", name: "Los artificiales" }, { type: "Chirigota", name: "Omá no me esperes pa almorzar" } ] },
+            { id: 2, date: "Lunes 12 de enero", time: "20:00h", groups: [ { type: "Coro", name: "El sindicato" }, { type: "Chirigota", name: "Los ahumaos" }, { type: "Comparsa", name: "Las lobas" }, { type: "Cuarteto", name: "El despertar de la fuerza. Abre el ojete" }, { type: "Chirigota", name: "Los Camerún de la Isla" }, { type: "Comparsa", name: "La ciudad prohibida" }, { type: "Chirigota", name: "To pa mi" } ] },
+            { id: 3, date: "Martes 13 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Dame veneno" }, { type: "Comparsa", name: "Los del escondite" }, { type: "Chirigota", name: "Nos hemos venío arriba" }, { type: "Comparsa", name: "Los que escriben en la arena" }, { type: "Chirigota", name: "Seguimos cayendo mal" }, { type: "Comparsa", name: "Con la primera risa" }, { type: "Chirigota", name: "Yo con esto no puedo" }, { type: "Comparsa", name: "La moda de Cádiz" } ] },
+            { id: 4, date: "Miércoles 14 de enero", time: "20:00h", groups: [ { type: "Coro", name: "La ciudad perfecta" }, { type: "Comparsa", name: "Las taradas" }, { type: "Chirigota", name: "Los robins" }, { type: "Comparsa", name: "El manicomio" }, { type: "Chirigota", name: "¡Cariño...vaya ambientazo!" }, { type: "Comparsa", name: "El desvelo" }, { type: "Chirigota", name: "Una chirigota en teoría" }, { type: "Comparsa", name: "Los fantasmas" } ] },
+            { id: 5, date: "Jueves 15 de enero", time: "20:00h", groups: [ { type: "Coro", name: "ADN" }, { type: "Chirigota", name: "San taratachin" }, { type: "Comparsa", name: "La hipócrita" }, { type: "Chirigota", name: "Los Cadisapiens (La involución)" }, { type: "Comparsa", name: "Los trapos sucios" }, { type: "Chirigota", name: "Los legías con g" }, { type: "Comparsa", name: "Culpable" } ] },
+            { id: 6, date: "Viernes 16 de enero", time: "20:00h", groups: [ { type: "Coro", name: "La viña del mar" }, { type: "Comparsa", name: "El verdugo" }, { type: "Chirigota", name: "Los antiguos" }, { type: "Cuarteto", name: "Crónica de una muerte más que anunciada" }, { type: "Chirigota", name: "La purga: los que no pasan" }, { type: "Comparsa", name: "Cadirvana" }, { type: "Chirigota", name: "¡A quien le importa!" } ] },
+            { id: 7, date: "Sábado 17 de enero", time: "20:00h", groups: [ { type: "Coro", name: "El reino de los cielos" }, { type: "Chirigota", name: "Los mohigangas" }, { type: "Comparsa", name: "La Camorra" }, { type: "Cuarteto", name: "Los latin king (de la calle paskin)" }, { type: "Chirigota", name: "¿No son pa matarlos?" }, { type: "Comparsa", name: "La Marea" } ] },
+            { id: 8, date: "Domingo 18 de enero", time: "20:00h", groups: [ { type: "Coro", name: "La carnicería" }, { type: "Comparsa", name: "Las muñecas" }, { type: "Chirigota", name: "Los niños con nombre" }, { type: "Coro", name: "Los caletarios" }, { type: "Comparsa", name: "Contra viento y marea" }, { type: "Chirigota", name: "Los compay" }, { type: "Comparsa", name: "La juguetería" } ] },
+            { id: 9, date: "Lunes 19 de enero", time: "20:00h", groups: [ { type: "Coro", name: "La marinera" }, { type: "Comparsa", name: "La última cuerda" }, { type: "Chirigota", name: "Los que se lo llevan calentito" }, { type: "Comparsa", name: "El hombre de hojalata" }, { type: "Comparsa", name: "El patriota" }, { type: "Chirigota", name: "Mírala cara a cara" }, { type: "Comparsa", name: "Los humanos" } ] },
+            { id: 10, date: "Martes 20 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Café Puerto América" }, { type: "Chirigota", name: "Tu cara me suena" }, { type: "Comparsa", name: "Los trapos" }, { type: "Chirigota", name: "Piensa mal y acertarás: Los desconfiaos" }, { type: "Comparsa", name: "El vecindario" }, { type: "Chirigota", name: "Kay" }, { type: "Comparsa", name: "Sociedad Limitada" }, { type: "Chirigota", name: "La viña de mis ojos" } ] },
+            { id: 11, date: "Miércoles 21 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Las mil maravillas" }, { type: "Comparsa", name: "Salud, gaditanismo y libertad" }, { type: "Chirigota", name: "Los que te dan el último viaje" }, { type: "Comparsa", name: "Los locos" }, { type: "Chirigota", name: "¡¡Qué más quiere que te diga!!" }, { type: "Comparsa", name: "Digan lo que digan" }, { type: "Chirigota", name: "Los muerting planner" }, { type: "Comparsa", name: "Los mariposas" } ] },
+            { id: 12, date: "Jueves 22 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Las gladitanas" }, { type: "Chirigota", name: "Los que luchan por su sueño" }, { type: "Comparsa", name: "OBDC me quedo contigo" }, { type: "Cuarteto", name: "¡Que vengan!" }, { type: "Comparsa", name: "Las jorobadas" }, { type: "Chirigota", name: "Las que salen por la noche" }, { type: "Comparsa", name: "Los hijos de Cádiz" }, { type: "Chirigota", name: "La comunidad autónoma" } ] },
+            { id: 13, date: "Viernes 23 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Tu muralla" }, { type: "Comparsa", name: "El jovencito Frankenstein" }, { type: "Chirigota", name: "Los amish del mono" }, { type: "Cuarteto", name: "¡Que no vengan!" }, { type: "Comparsa", name: "Los pájaros carpinteros" }, { type: "Chirigota", name: "Los legales" }, { type: "Comparsa", name: "Los señalaos" } ] },
+            { id: 14, date: "Sábado 24 de enero", time: "20:00h", groups: [ { type: "Coro", name: "La Esencia" }, { type: "Comparsa", name: "Lxs Invencibles" }, { type: "Chirigota", name: "Los que van a coger papas" }, { type: "Cuarteto", name: "La pandilla inclusiva" }, { type: "Comparsa", name: "Las manos de Cádiz" }, { type: "Chirigota", name: "Las bodas de plata" }, { type: "Comparsa", name: "La última noche" } ] },
+            { id: 15, date: "Domingo 25 de enero", time: "20:00h", groups: [ { type: "Coro", name: "¡Qué pechá de paja!" }, { type: "Comparsa", name: "El refugio" }, { type: "Chirigota", name: "Los camper del sur" }, { type: "Cuarteto", name: "Los tres cuarteteros" }, { type: "Comparsa", name: "Mindundi" }, { type: "Chirigota", name: "Los ken" }, { type: "Comparsa", name: "DSAS3" } ] },
+            { id: 16, date: "Lunes 26 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Al garete" }, { type: "Comparsa", name: "La carne-vale" }, { type: "Chirigota", name: "Los quince en las algas" }, { type: "Comparsa", name: "Los invisibles" }, { type: "Comparsa", name: "La biblioteca" }, { type: "Chirigota", name: "Los que la tienen de mármol" }, { type: "Comparsa", name: "La conexión" } ] },
+            { id: 17, date: "Martes 27 de enero", time: "20:00h", groups: [ { type: "Coro", name: "Los mentirosos" }, { type: "Comparsa", name: "La condená" }, { type: "Chirigota", name: "Ssshhhhh!!!" }, { type: "Comparsa", name: "La gracia divina" }, { type: "Chirigota", name: "Los de la tribu 'de al lado'" }, { type: "Comparsa", name: "Las pasajeras" }, { type: "Chirigota", name: "El marqués de la paguita" } ] }
+        ];
+
+        let currentFunctionId = 1;
+        let currentUser = localStorage.getItem('coac2026_user');
+        let votes = JSON.parse(localStorage.getItem('coac2026_votes')) || {};
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function startSession() {
+            const nickname = document.getElementById('user-nickname').value.trim();
+            if (nickname.length < 2) {
+                alert("Por favor, introduce un nombre válido (mínimo 2 caracteres).");
+                return;
+            }
+
+            // Sistema anti-fraude
+            const deviceCheck = checkDeviceIntegrity();
+            const multiAccountCheck = checkMultipleAccounts();
+            
+            if (multiAccountCheck.suspicious) {
+                const confirm = window.confirm(
+                    `⚠️ ADVERTENCIA DE SEGURIDAD\n\n` +
+                    `Hemos detectado ${multiAccountCheck.count} cuentas en este dispositivo:\n` +
+                    `${multiAccountCheck.users.join(', ')}\n\n` +
+                    `El sistema está diseñado para UN jurado por dispositivo.\n` +
+                    `Crear múltiples cuentas para votar varias veces está prohibido.\n\n` +
+                    `¿Deseas continuar de todas formas?`
+                );
+                
+                if (!confirm) return;
+            }
+
+            // Verificar si el usuario ya tiene votos previos
+            const previousVotes = getUserVoteCount(nickname);
+            if (previousVotes > 0) {
+                const confirm = window.confirm(
+                    `Bienvenido de nuevo, ${nickname}.\n\n` +
+                    `Tienes ${previousVotes} votos registrados.\n` +
+                    `¿Deseas continuar con esta cuenta?`
+                );
+                if (!confirm) return;
+            }
+
+            currentUser = nickname;
+            localStorage.setItem('coac2026_user', nickname);
+            registerUser(nickname);
+            
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('display-user').innerText = nickname;
+            
+            // Solicitar permisos de notificaciones
+            if (localStorage.getItem('coac2026_notifications') !== 'enabled') {
+                setTimeout(() => {
+                    if (confirm('¿Quieres recibir notificaciones 10 minutos antes de cada sesión?')) {
+                        requestNotificationPermission();
+                    }
+                }, 2000);
+            }
+            
+            init();
+        }
+
+        function logout() {
+            if(confirm('¿Quieres cerrar sesión? Tus votos se mantendrán guardados.')) {
+                localStorage.removeItem('coac2026_user');
+                location.reload();
+            }
+        }
+
+        function initCountdown() {
+            const targetDate = new Date('January 11, 2026 20:00:00').getTime();
+
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown').innerHTML = `<h2 class="carnival-font text-4xl text-[#D4AF37]">¡EN DIRECTO!</h2>`;
+                    document.getElementById('live-indicator').classList.remove('hidden');
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        function init() {
+            if (!currentUser) {
+                document.getElementById('login-overlay').style.display = 'flex';
+                return;
+            }
+            
+            // Sistema anti-fraude al iniciar
+            checkDeviceIntegrity();
+            
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('display-user').innerText = currentUser;
+            
+            // Cargar modo de video guardado
+            const savedMode = localStorage.getItem('coac2026_video_mode');
+            if (savedMode) videoMode = savedMode;
+            
+            lucide.createIcons();
+            initCountdown();
+            initVideoPlayer(); // Inicializar player de video
+            renderTabs();
+            renderFunction(currentFunctionId);
+            updateStats();
+            
+            // Activar notificaciones programadas
+            if (localStorage.getItem('coac2026_notifications') === 'enabled') {
+                scheduleSessionNotifications();
+            }
+            
+            // Mostrar advertencia si hay múltiples cuentas
+            const multiAccountCheck = checkMultipleAccounts();
+            if (multiAccountCheck.suspicious && multiAccountCheck.count > 2) {
+                setTimeout(() => {
+                    alert(
+                        `⚠️ SISTEMA DE INTEGRIDAD\n\n` +
+                        `Detectamos ${multiAccountCheck.count} cuentas en este dispositivo.\n` +
+                        `Recuerda: una persona = una cuenta.\n` +
+                        `Los votos duplicados pueden ser invalidados.`
+                    );
+                }, 3000);
+            }
+        }
+
+        function getVoteBadge(functionId) {
+            const count = Object.keys(votes).filter(k => k.startsWith(`${currentUser}_f${functionId}_`)).length;
+            return count > 0 ? `<span class="absolute -top-2 -right-2 bg-[#D4AF37] text-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${count}</span>` : '';
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('function-tabs');
+            container.innerHTML = coacData.map(f => `
+                <button onclick="switchFunction(${f.id})" 
+                        class="relative whitespace-nowrap px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all border touch-manipulation ${currentFunctionId === f.id ? 'bg-gradient-to-r from-[#D4AF37] to-[#fbbf24] border-[#D4AF37] text-black font-bold' : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300'}">
+                    ${getVoteBadge(f.id)}
+                    <span class="text-[10px] sm:text-xs block mb-0.5 opacity-70">Día ${f.id}</span>
+                    <span class="text-xs sm:text-sm">${f.date.split(' ')[1]} ${f.date.split(' ')[3]}</span>
+                </button>
+            `).join('');
+        }
+
+        function switchFunction(id) {
+            currentFunctionId = id;
+            currentFilter = 'all';
+            searchQuery = '';
+            document.getElementById('search-groups').value = '';
+            resetFilters();
+            renderTabs();
+            renderFunction(id);
+        }
+
+        function filterByType(type) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderFunction(currentFunctionId);
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.filter-btn').classList.add('active');
+        }
+
+        function handleSearch(val) {
+            searchQuery = val.toLowerCase();
+            renderFunction(currentFunctionId);
+        }
+
+        function getTypeColor(type) {
+            const colors = {
+                'Coro': 'border-blue-500/40 bg-blue-500/10 text-blue-400',
+                'Comparsa': 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
+                'Chirigota': 'border-amber-500/40 bg-amber-500/10 text-amber-400',
+                'Cuarteto': 'border-purple-500/40 bg-purple-500/10 text-purple-400'
+            };
+            return colors[type] || 'border-slate-500/40 bg-slate-500/10 text-slate-400';
+        }
+
+        function renderFunction(id) {
+            const func = coacData.find(f => f.id === id);
+            const container = document.getElementById('function-content');
+            
+            let filteredGroups = func.groups;
+            if (currentFilter !== 'all') {
+                filteredGroups = filteredGroups.filter(g => g.type === currentFilter);
+            }
+            if (searchQuery) {
+                filteredGroups = filteredGroups.filter(g => 
+                    g.name.toLowerCase().includes(searchQuery) || 
+                    g.type.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (filteredGroups.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-20 text-white/40">
+                        <i data-lucide="search-x" class="w-16 h-16 mx-auto mb-4"></i>
+                        <p class="text-xl">No se encontraron agrupaciones</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            let html = `
+                <div class="glass-panel p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 border border-white/10">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4">
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl md:text-4xl font-black mb-1 text-white">${func.date}</h3>
+                            <p class="text-[#D4AF37] flex items-center gap-2 text-xs sm:text-sm">
+                                <i data-lucide="clock" class="w-4 h-4"></i> ${func.time}
+                            </p>
+                        </div>
+                        <div class="glass-panel px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-[#D4AF37]/20 w-full md:w-auto text-center">
+                            <span class="text-[10px] uppercase text-white/50 block mb-1">Agrupaciones</span>
+                            <span class="text-xl sm:text-2xl font-bold text-white">${filteredGroups.length}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            `;
+
+            filteredGroups.forEach((group, index) => {
+                const realIndex = func.groups.indexOf(group);
+                const voteKey = `${currentUser}_f${id}_g${realIndex}`;
+                const userVote = votes[voteKey];
+                const isVoted = userVote !== undefined;
+
+                html += `
+                    <div class="card-enter glass-panel p-4 sm:p-6 rounded-2xl flex flex-col justify-between hover:border-[#D4AF37]/30 transition-all stat-card">
+                        ${isVoted ? `
+                            <div class="absolute -top-2 -right-2 bg-[#D4AF37] text-black text-xs font-bold px-3 py-1 rounded-full">
+                                ✓ VOTADO
+                            </div>
+                        ` : ''}
+                        <div class="mb-4">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="text-xs px-3 py-1.5 rounded-lg font-semibold border ${getTypeColor(group.type)}">
+                                    ${group.type}
+                                </span>
+                                <span class="text-2xl sm:text-3xl font-black text-white/10">${(realIndex + 1).toString().padStart(2, '0')}</span>
+                            </div>
+                            <h4 class="card-title text-lg sm:text-xl font-bold mb-2 min-h-[3rem]">${group.name}</h4>
+                        </div>
+                        
+                        <div class="flex gap-2 sm:gap-3">
+                            <button onclick="castVote('${voteKey}', true)" ${isVoted ? 'disabled' : ''}
+                                    class="vote-button flex-1 py-3 sm:py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-sm sm:text-sm transition-all touch-manipulation active:scale-95 ${userVote === true ? 'bg-emerald-600 text-white' : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i> <span class="hidden sm:inline">PASA</span><span class="sm:hidden">✓</span>
+                            </button>
+                            <button onclick="castVote('${voteKey}', false)" ${isVoted ? 'disabled' : ''}
+                                    class="vote-button flex-1 py-3 sm:py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-sm sm:text-sm transition-all touch-manipulation active:scale-95 ${userVote === false ? 'bg-rose-600 text-white' : 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
+                                <i data-lucide="x-circle" class="w-5 h-5"></i> <span class="hidden sm:inline">NO PASA</span><span class="sm:hidden">✗</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function castVote(key, val) {
+            if (votes[key] !== undefined) return;
+            
+            votes[key] = val;
+            localStorage.setItem('coac2026_votes', JSON.stringify(votes));
+            
+            renderFunction(currentFunctionId);
+            renderTabs();
+            updateStats();
+        }
+
+        function shareVotes() {
+            const passed = Object.entries(votes)
+                .filter(([key, val]) => val === true && key.startsWith(`${currentUser}_`))
+                .map(([key]) => {
+                    const parts = key.split('_');
+                    const fId = parseInt(parts[1].replace('f', ''));
+                    const gIdx = parseInt(parts[2].replace('g', ''));
+                    return coacData.find(f => f.id === fId).groups[gIdx].name;
+                });
+
+            const totalVotes = Object.keys(votes).filter(k => k.startsWith(`${currentUser}_`)).length;
+            const rejected = totalVotes - passed.length;
+
+            const text = `🎭 MI PAPELETA COAC 2026 🎭\n\nJurado: ${currentUser}\nVeredictos: ${totalVotes}\n\n✅ PASAN (${passed.length}):\n${passed.map(n => `• ${n}`).join('\n')}\n\n❌ No pasan: ${rejected}\n\n📊 Evaluado con el Cuadrante Profesional del Falla`;
+            
+            if (navigator.share) {
+                navigator.share({ text }).catch(() => {
+                    navigator.clipboard.writeText(text).then(() => alert("¡Copiado al portapapeles!"));
+                });
+            } else {
+                navigator.clipboard.writeText(text).then(() => alert("¡Papeleta copiada! Pégala donde quieras."));
+            }
+        }
+
+        function openSettings() {
+            document.getElementById('settings-modal').classList.remove('hidden');
+            updateSettingsPanel();
+            lucide.createIcons();
+        }
+
+        function closeSettings() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function updateSettingsPanel() {
+            const deviceId = localStorage.getItem('coac2026_device_id');
+            document.getElementById('device-id-display').textContent = deviceId ? deviceId.substring(0, 12) + '...' : 'N/A';
+            
+            const multiCheck = checkMultipleAccounts();
+            const allUsers = JSON.parse(localStorage.getItem('coac2026_all_users')) || [];
+            const usersOnDevice = allUsers.filter(u => u.deviceId === deviceId);
+            document.getElementById('accounts-count').textContent = usersOnDevice.length;
+            
+            const userVotes = Object.entries(votes).filter(([k]) => k.startsWith(`${currentUser}_`));
+            const passed = userVotes.filter(([_, v]) => v === true).length;
+            const rejected = userVotes.filter(([_, v]) => v === false).length;
+            
+            document.getElementById('total-passed').textContent = passed;
+            document.getElementById('total-rejected').textContent = rejected;
+            
+            const notificationsEnabled = localStorage.getItem('coac2026_notifications') === 'enabled';
+            const toggleBtn = document.getElementById('notification-toggle');
+            if (notificationsEnabled) {
+                toggleBtn.textContent = '✓ Notificaciones Activadas';
+                toggleBtn.classList.remove('bg-emerald-500/20', 'border-emerald-500/30', 'text-emerald-400');
+                toggleBtn.classList.add('bg-emerald-600', 'text-white');
+            } else {
+                toggleBtn.textContent = 'Activar Notificaciones';
+                toggleBtn.classList.add('bg-emerald-500/20', 'border-emerald-500/30', 'text-emerald-400');
+                toggleBtn.classList.remove('bg-emerald-600', 'text-white');
+            }
+        }
+
+        async function toggleNotifications() {
+            const current = localStorage.getItem('coac2026_notifications');
+            if (current === 'enabled') {
+                localStorage.removeItem('coac2026_notifications');
+                alert('Notificaciones desactivadas');
+            } else {
+                await requestNotificationPermission();
+                scheduleSessionNotifications();
+            }
+            updateSettingsPanel();
+        }
+
+        function resetAccount() {
+            if (confirm(`⚠️ ¿ESTÁS SEGURO?\n\nEsto borrará TODOS tus ${Object.keys(votes).filter(k => k.startsWith(`${currentUser}_`)).length} votos de forma PERMANENTE.\n\nEsta acción NO se puede deshacer.`)) {
+                if (confirm('Última confirmación: ¿Realmente quieres borrar todos tus votos?')) {
+                    const newVotes = {};
+                    Object.keys(votes).forEach(k => {
+                        if (!k.startsWith(`${currentUser}_`)) newVotes[k] = votes[k];
+                    });
+                    votes = newVotes;
+                    localStorage.setItem('coac2026_votes', JSON.stringify(votes));
+                    
+                    closeSettings();
+                    renderTabs();
+                    renderFunction(currentFunctionId);
+                    updateStats();
+                    alert('✓ Todos tus votos han sido eliminados');
+                }
+            }
+        }
+
+        function updateStats() {
+            const userVotes = Object.keys(votes).filter(k => k.startsWith(`${currentUser}_`));
+            const count = userVotes.length;
+            const totalGroups = coacData.reduce((acc, curr) => acc + curr.groups.length, 0);
+            document.getElementById('stats-counter').innerText = `${count} / ${totalGroups}`;
+            renderSummary();
+        }
+
+        function renderSummary() {
+            const types = ['Coro', 'Comparsa', 'Chirigota', 'Cuarteto'];
+            const summaryContainer = document.getElementById('summary-stats');
+            
+            let html = '';
+            types.forEach(type => {
+                const passed = Object.entries(votes).filter(([key, val]) => {
+                    if (!key.startsWith(`${currentUser}_`)) return false;
+                    const parts = key.split('_');
+                    const fIdx = parseInt(parts[1].replace('f', ''));
+                    const gIdx = parseInt(parts[2].replace('g', ''));
+                    const group = coacData.find(f => f.id === fIdx).groups[gIdx];
+                    return group.type === type && val === true;
+                }).length;
+
+                const totalInType = coacData.reduce((acc, f) => 
+                    acc + f.groups.filter(g => g.type === type).length, 0);
+
+                const percent = totalInType > 0 ? (passed / totalInType) * 100 : 0;
+
+                html += `
+                    <div class="stat-card bg-black/40 p-4 sm:p-5 md:p-6 rounded-xl border border-white/10">
+                        <p class="text-[10px] sm:text-xs text-white/40 uppercase font-bold mb-2">${type}</p>
+                        <p class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3 sm:mb-4">${passed} <span class="text-sm sm:text-base md:text-lg font-normal text-white/30">/ ${totalInType}</span></p>
+                        <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden mb-2">
+                            <div class="h-full transition-all duration-1000 ${getTypeColor(type).split(' ')[0].replace('/10', '/80')}" style="width: ${percent}%"></div>
+                        </div>
+                        <p class="text-[10px] sm:text-xs font-semibold text-right text-white/50">${Math.round(percent)}% clasificados</p>
+                    </div>
+                `;
+            });
+            summaryContainer.innerHTML = html;
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
